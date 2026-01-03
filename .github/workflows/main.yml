@@ -1,4 +1,4 @@
-name: RDP greenboyMC - Intro The Flash (Giảm Lag FULL MAX Fix Lỗi)
+name: RDP greenboyMC - Intro The Flash (Giảm Lag FULL MAX Fix Lỗi 2026)
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ jobs:
           NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
         run: .\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
 
-      - name: Giảm Lag FULL MAX + Fast Intro (An Toàn 2026)
+      - name: Giảm Lag FULL MAX + Fast Intro (An Toàn Server 2025)
         run: |
           # Enable RDP
           Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
@@ -38,7 +38,7 @@ jobs:
           reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v EnableTransparency /t REG_DWORD /d 0 /f
           reg add "HKCU\Software\Microsoft\Windows\DWM" /v EnableAeroPeek /t REG_DWORD /d 0 /f
 
-          # Tắt service nặng full
+          # Tắt service nặng
           @("SysMain","WSearch","DiagTrack","wuauserv","bits","WindowsSearch") | ForEach-Object {
             Stop-Service -Name $_ -Force -ErrorAction SilentlyContinue
             Set-Service -Name $_ -StartupType Disabled -ErrorAction SilentlyContinue
@@ -47,14 +47,13 @@ jobs:
           # Power plan High Performance
           powercfg -setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
 
-          # RDP giảm lag FULL MAX an toàn (TurboRemoteFX + BetterRDP 2026)
+          # RDP giảm lag FULL MAX an toàn (TurboRemoteFX + RemoteFX)
           New-Item -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -Force | Out-Null
           Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -Name "MaxCompressionLevel" -Value 0 -Type DWord  # No compression
           Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -Name "AVCHardwareEncodePreferred" -Value 1 -Type DWord
           Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -Name "AVC444ModePreferred" -Value 1 -Type DWord
           Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services' -Name "fEnableRemoteFX" -Value 1 -Type DWord
-          Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations' -Name "DWMFRAMEINTERVAL" -Value 10 -Type DWord
-          Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -Name "MaxFrameRate" -Value 60 -Type DWord  # 60 FPS unlock
+          Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations' -Name "DWMFRAMEINTERVAL" -Value 10 -Type DWord  # Low latency DWM
 
       - name: Start Ngrok Asia & Hiện IP Siêu Nhanh
         run: |
@@ -62,7 +61,7 @@ jobs:
           Write-Host "RDP greenboyMC - Giảm Lag FULL MAX Fix Lỗi + IP Nhanh"
           Write-Host "Username: greenboyMC"
           Write-Host "Password: W1nd0ws-P4ssw0rd-2025!"
-          Write-Host "No Compression | 60 FPS | RemoteFX Full | Region AP"
+          Write-Host "No Compression | RemoteFX Full | Low DWM | Region AP"
           Write-Host "=================================================="
 
           Start-Process -WindowStyle Hidden -FilePath ".\ngrok.exe" -ArgumentList "tcp 3389 --region ap"
@@ -91,4 +90,4 @@ jobs:
             Write-Host "Chưa thấy IP, run lại workflow nhé!"
           }
 
-          Start-Sleep -Se
+          Start-Sleep -Seconds 21400
